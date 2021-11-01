@@ -1,0 +1,34 @@
+name: tv_shows
+description: Package for TV Shows pages.
+version: 0.0.1
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../core
+
+  sqflite: ^2.0.0+3
+  http: ^0.13.3
+  equatable: ^2.0.2
+  dartz: ^0.10.0-nullsafety.2
+  cached_network_image: ^3.0.0
+  provider: ^5.0.0
+  flutter_rating_bar: ^4.0.0
+
+dev_dependencies:
+  mockito: ^5.0.8
+  build_runner: ^2.0.4
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
