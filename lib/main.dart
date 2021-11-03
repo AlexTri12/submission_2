@@ -1,5 +1,6 @@
 import 'package:about/about.dart';
 import 'package:core/core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:movies/movies.dart';
 import 'package:tv_shows/tv_shows.dart';
 
@@ -10,6 +11,7 @@ import 'package:ditonton/injection.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await di.getIoClient();
   di.init();
   runApp(MyApp());
