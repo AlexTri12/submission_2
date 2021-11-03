@@ -15,3 +15,6 @@ export 'package:tv_shows/presentation/provider/tv_show_detail_notifier.dart';
 export 'package:tv_shows/presentation/provider/tv_show_list_notifier.dart';
 export 'package:tv_shows/presentation/provider/tv_show_search_notifier.dart';
 export 'package:tv_shows/presentation/provider/watchlist_tv_show_notifier.dart';
+
+// Bloc
+export 'package:tv_shows/presentation/bloc/tv_show_search_bloc.dart';

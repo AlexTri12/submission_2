@@ -15,3 +15,6 @@ export 'package:movies/presentation/provider/movie_search_notifier.dart';
 export 'package:movies/presentation/provider/popular_movies_notifier.dart';
 export 'package:movies/presentation/provider/top_rated_movies_notifier.dart';
 export 'package:movies/presentation/provider/watchlist_movie_notifier.dart';
+
+// Bloc
+export 'package:movies/presentation/bloc/movie_search_bloc.dart';

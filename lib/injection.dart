@@ -71,11 +71,11 @@ void init() {
       removeWatchlist: locator(),
     ),
   );
-  locator.registerFactory(
-    () => MovieSearchNotifier(
-      searchMovies: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => MovieSearchNotifier(
+  //     searchMovies: locator(),
+  //   ),
+  // );
   locator.registerFactory(
     () => PopularMoviesNotifier(
       locator(),
@@ -108,11 +108,11 @@ void init() {
       removeTvWatchlist: locator(),
     ),
   );
-  locator.registerFactory(
-        () => TvShowSearchNotifier(
-      searchTvShows: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //       () => TvShowSearchNotifier(
+  //     searchTvShows: locator(),
+  //   ),
+  // );
   locator.registerFactory(
         () => PopularTvShowsNotifier(
       locator(),
@@ -126,6 +126,19 @@ void init() {
   locator.registerFactory(
         () => WatchlistTvShowNotifier(
       getWatchlistTvShows: locator(),
+    ),
+  );
+
+  // Bloc
+  locator.registerFactory(
+      () => MovieSearchBloc(
+        locator(),
+      ),
+  );
+
+  locator.registerFactory(
+        () => TvShowSearchBloc(
+      locator(),
     ),
   );
 
