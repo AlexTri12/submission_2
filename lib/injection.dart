@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:http/io_client.dart';
 import 'package:movies/data/datasources/db/database_helper.dart';
 import 'package:movies/data/datasources/movie_local_data_source.dart';
 import 'package:movies/data/datasources/movie_remote_data_source.dart';
@@ -30,10 +34,24 @@ import 'package:tv_shows/domain/usecases/remove_tv_watchlist.dart';
 import 'package:tv_shows/domain/usecases/save_tv_watchlist.dart';
 import 'package:tv_shows/domain/usecases/search_tv_shows.dart';
 import 'package:tv_shows/tv_shows.dart';
-import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
+
+Future<SecurityContext> get globalContext async {
+  final sslCert = await rootBundle.load('certificates/themoviedb-certification.cer');
+  SecurityContext securityContext = SecurityContext(withTrustedRoots: false);
+  securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
+  return securityContext;
+}
+
+Future<void> getIoClient() async {
+  HttpClient httpClient = HttpClient(context: await globalContext);
+  httpClient.badCertificateCallback =
+      (X509Certificate cert, String host, int port) => false;
+  IOClient ioClient = IOClient(httpClient);
+  locator.registerSingleton(ioClient);
+}
 
 void init() {
   // Provider
@@ -151,19 +169,16 @@ void init() {
 
   // Data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+      () => MovieRemoteDataSourceImpl(ioClient: locator()));
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
 
   locator.registerLazySingleton<TvShowRemoteDataSource>(
-          () => TvShowRemoteDataSourceImpl(client: locator()));
+          () => TvShowRemoteDataSourceImpl(ioClient: locator()));
   locator.registerLazySingleton<TvShowLocalDataSource>(
           () => TvShowLocalDataSourceImpl(databaseHelper: locator()));
 
   // Helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
   locator.registerLazySingleton<DatabaseHelperTv>(() => DatabaseHelperTv());
-
-  // External
-  locator.registerLazySingleton(() => http.Client());
 }
