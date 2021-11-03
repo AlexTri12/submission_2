@@ -17,6 +17,7 @@ class AboutPage extends StatelessWidget {
                   child: Center(
                     child: Image.asset(
                       'assets/circle-g.png',
+                      package: 'about',
                       width: 128,
                     ),
                   ),
