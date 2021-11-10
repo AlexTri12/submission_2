@@ -46,6 +46,7 @@ class _WatchlistTvShowsPageState extends State<WatchlistTvShowsPage> {
               );
             } else if (state is WatchlistError) {
               return Center(
+                key: Key('error_message'),
                 child: Text(state.message),
               );
             } else {

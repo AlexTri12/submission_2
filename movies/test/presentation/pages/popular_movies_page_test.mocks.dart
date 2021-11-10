@@ -2,10 +2,8 @@
 // in movies/test/presentation/pages/popular_movies_page_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
-
+import 'package:bloc_test/bloc_test.dart' as _i6;
 import 'package:core/core.dart' as _i2;
-import 'package:flutter_bloc/flutter_bloc.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:movies/presentation/bloc/movie_popular_bloc.dart' as _i4;
 
@@ -17,113 +15,11 @@ import 'package:movies/presentation/bloc/movie_popular_bloc.dart' as _i4;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakePopularState_0 extends _i1.Fake implements _i2.PopularState {}
-
-class _FakeStreamSubscription_1<T> extends _i1.Fake
-    implements _i3.StreamSubscription<T> {}
-
 /// A class which mocks [MoviePopularBloc].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMoviePopularBloc extends _i1.Mock implements _i4.MoviePopularBloc {
-  MockMoviePopularBloc() {
-    _i1.throwOnMissingStub(this);
-  }
+class MockMoviePopularBloc extends _i6.MockBloc<_i2.PopularEvent, _i2.PopularState> implements _i4.MoviePopularBloc {}
 
-  @override
-  _i2.PopularState get state => (super.noSuchMethod(Invocation.getter(#state),
-      returnValue: _FakePopularState_0()) as _i2.PopularState);
-  @override
-  _i3.Stream<_i2.PopularState> get stream =>
-      (super.noSuchMethod(Invocation.getter(#stream),
-              returnValue: Stream<_i2.PopularState>.empty())
-          as _i3.Stream<_i2.PopularState>);
-  @override
-  bool get isClosed =>
-      (super.noSuchMethod(Invocation.getter(#isClosed), returnValue: false)
-          as bool);
-  @override
-  _i3.Stream<_i2.PopularState> mapEventToState(_i2.PopularEvent? event) =>
-      (super.noSuchMethod(Invocation.method(#mapEventToState, [event]),
-              returnValue: Stream<_i2.PopularState>.empty())
-          as _i3.Stream<_i2.PopularState>);
-  @override
-  void add(_i2.PopularEvent? event) =>
-      super.noSuchMethod(Invocation.method(#add, [event]),
-          returnValueForMissingStub: null);
-  @override
-  void onEvent(_i2.PopularEvent? event) =>
-      super.noSuchMethod(Invocation.method(#onEvent, [event]),
-          returnValueForMissingStub: null);
-  @override
-  _i3.Stream<_i5.Transition<_i2.PopularEvent, _i2.PopularState>> transformEvents(
-          _i3.Stream<_i2.PopularEvent>? events,
-          _i5.TransitionFunction<_i2.PopularEvent, _i2.PopularState>?
-              transitionFn) =>
-      (super.noSuchMethod(
-              Invocation.method(#transformEvents, [events, transitionFn]),
-              returnValue: Stream<
-                  _i5.Transition<_i2.PopularEvent, _i2.PopularState>>.empty())
-          as _i3.Stream<_i5.Transition<_i2.PopularEvent, _i2.PopularState>>);
-  @override
-  void emit(_i2.PopularState? state) =>
-      super.noSuchMethod(Invocation.method(#emit, [state]),
-          returnValueForMissingStub: null);
-  @override
-  void on<E extends _i2.PopularEvent>(
-          _i5.EventHandler<E, _i2.PopularState>? handler,
-          {_i5.EventTransformer<E>? transformer}) =>
-      super.noSuchMethod(
-          Invocation.method(#on, [handler], {#transformer: transformer}),
-          returnValueForMissingStub: null);
-  @override
-  void onTransition(
-          _i5.Transition<_i2.PopularEvent, _i2.PopularState>? transition) =>
-      super.noSuchMethod(Invocation.method(#onTransition, [transition]),
-          returnValueForMissingStub: null);
-  @override
-  _i3.Stream<_i5.Transition<_i2.PopularEvent, _i2.PopularState>>
-      transformTransitions(
-              _i3.Stream<_i5.Transition<_i2.PopularEvent, _i2.PopularState>>?
-                  transitions) =>
-          (super.noSuchMethod(
-                  Invocation.method(#transformTransitions, [transitions]),
-                  returnValue: Stream<
-                      _i5.Transition<_i2.PopularEvent, _i2.PopularState>>.empty())
-              as _i3
-                  .Stream<_i5.Transition<_i2.PopularEvent, _i2.PopularState>>);
-  @override
-  _i3.Future<void> close() => (super.noSuchMethod(Invocation.method(#close, []),
-      returnValue: Future<void>.value(),
-      returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
-  @override
-  _i3.StreamSubscription<_i2.PopularState> listen(
-          void Function(_i2.PopularState)? onData,
-          {Function? onError,
-          void Function()? onDone,
-          bool? cancelOnError}) =>
-      (super.noSuchMethod(
-              Invocation.method(#listen, [
-                onData
-              ], {
-                #onError: onError,
-                #onDone: onDone,
-                #cancelOnError: cancelOnError
-              }),
-              returnValue: _FakeStreamSubscription_1<_i2.PopularState>())
-          as _i3.StreamSubscription<_i2.PopularState>);
-  @override
-  void onChange(_i5.Change<_i2.PopularState>? change) =>
-      super.noSuchMethod(Invocation.method(#onChange, [change]),
-          returnValueForMissingStub: null);
-  @override
-  void addError(Object? error, [StackTrace? stackTrace]) =>
-      super.noSuchMethod(Invocation.method(#addError, [error, stackTrace]),
-          returnValueForMissingStub: null);
-  @override
-  void onError(Object? error, StackTrace? stackTrace) =>
-      super.noSuchMethod(Invocation.method(#onError, [error, stackTrace]),
-          returnValueForMissingStub: null);
-  @override
-  String toString() => super.toString();
-}
+class MoviePopularEventFake extends _i1.Fake implements _i2.PopularEvent {}
+
+class MoviePopularStateFake extends _i1.Fake implements _i2.PopularState {}

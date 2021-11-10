@@ -2,8 +2,6 @@
 // in movies/test/presentation/pages/top_rated_movies_page_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;

@@ -1,106 +1,70 @@
 import 'package:core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_shows/domain/entities/tv_show.dart';
-import 'package:tv_shows/presentation/pages/tv_show_detail_page.dart';
-import 'package:tv_shows/presentation/provider/tv_show_detail_notifier.dart';
+import 'package:tv_shows/tv_shows.dart';
+import 'package:tv_shows/presentation/pages/top_rated_tv_shows_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:mocktail/mocktail.dart' as mck;
 
-import '../../dummy_data/dummy_objects.dart';
-import 'tv_show_detail_page_test.mocks.dart';
+import 'top_rated_tv_shows_page_test.mocks.dart';
 
-@GenerateMocks([
-  TvShowDetailNotifier,
-])
+@GenerateMocks([TvShowTopRatedBloc])
 void main() {
-  late MockTvShowDetailNotifier mockTvShowDetailNotifier;
+  late MockTvShowTopRatedBloc mockBloc;
+
+  setUpAll(() {
+    mck.registerFallbackValue(TvShowTopRatedEventFake());
+    mck.registerFallbackValue(TvShowTopRatedStateFake());
+  });
 
   setUp(() {
-    mockTvShowDetailNotifier = MockTvShowDetailNotifier();
+    mockBloc = MockTvShowTopRatedBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TvShowDetailNotifier>.value(
-      value: mockTvShowDetailNotifier,
-      child: MaterialApp(
-        home: body,
+    return MaterialApp(
+      home: BlocProvider<TvShowTopRatedBloc>(
+        create: (c) => mockBloc,
+        child: body,
       ),
     );
   }
 
-  testWidgets('Watchlist button should display add icon when TV show not added to watchlist', (WidgetTester tester) async {
-    // Arrange
-    when(mockTvShowDetailNotifier.tvShowState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShow).thenReturn(testTvShowDetail);
-    when(mockTvShowDetailNotifier.recommendationState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShowRecommendations).thenReturn(<TvShow>[]);
-    when(mockTvShowDetailNotifier.isAddedToWatchlist).thenReturn(false);
+  testWidgets('Page should display progress bar when loading',
+          (WidgetTester tester) async {
+        mck.when(() => mockBloc.state).thenAnswer((_) => TopRatedLoading());
 
-    final watchlistButtonIcon = find.byIcon(Icons.add);
-    // Act
-    await tester.pumpWidget(_makeTestableWidget(TvShowDetailPage(id: 1416)));
-    // Assert
-    expect(watchlistButtonIcon, findsOneWidget);
-  });
+        final progressFinder = find.byType(CircularProgressIndicator);
+        final centerFinder = find.byType(Center);
 
-  testWidgets('Watchlist button should display check icon when TV show is added to watchlist', (WidgetTester tester) async {
-    // Arrange
-    when(mockTvShowDetailNotifier.tvShowState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShow).thenReturn(testTvShowDetail);
-    when(mockTvShowDetailNotifier.recommendationState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShowRecommendations).thenReturn(<TvShow>[]);
-    when(mockTvShowDetailNotifier.isAddedToWatchlist).thenReturn(true);
+        await tester.pumpWidget(_makeTestableWidget(TopRatedTvShowsPage()));
+        await tester.pump(Duration.zero);
 
-    final watchlistButtonIcon = find.byIcon(Icons.check);
-    // Act
-    await tester.pumpWidget(_makeTestableWidget(TvShowDetailPage(id: 1416)));
-    // Assert
-    expect(watchlistButtonIcon, findsOneWidget);
-  });
+        expect(centerFinder, findsOneWidget);
+        expect(progressFinder, findsOneWidget);
+      });
 
-  testWidgets('Watchlist button should display snack bar when added to watchlist', (WidgetTester tester) async {
-    // Arrange
-    when(mockTvShowDetailNotifier.tvShowState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShow).thenReturn(testTvShowDetail);
-    when(mockTvShowDetailNotifier.recommendationState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShowRecommendations).thenReturn(<TvShow>[]);
-    when(mockTvShowDetailNotifier.isAddedToWatchlist).thenReturn(false);
-    when(mockTvShowDetailNotifier.watchlistMessage).thenReturn('Added to Watchlist');
+  testWidgets('Page should display when data is loaded',
+          (WidgetTester tester) async {
+        mck.when(() => mockBloc.state).thenAnswer((_) => TopRatedHasData(<TvShow>[]));
 
-    final watchlistButton = find.byType(ElevatedButton);
-    // Act create the UI
-    await tester.pumpWidget(_makeTestableWidget(TvShowDetailPage(id: 1416)));
-    // Assert before add to watchlist
-    expect(find.byIcon(Icons.add), findsOneWidget);
-    // Act tap button
-    await tester.tap(watchlistButton);
-    await tester.pump();
-    // Assert snack bar and text added to watchlist
-    expect(find.byType(SnackBar), findsOneWidget);
-    expect(find.text('Added to Watchlist'), findsOneWidget);
-  });
+        final listViewFinder = find.byType(ListView);
 
-  testWidgets('Watchlist button should display AlertDialog when add to watchlist failed', (WidgetTester tester) async {
-    // Arrange
-    when(mockTvShowDetailNotifier.tvShowState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShow).thenReturn(testTvShowDetail);
-    when(mockTvShowDetailNotifier.recommendationState).thenReturn(RequestState.Loaded);
-    when(mockTvShowDetailNotifier.tvShowRecommendations).thenReturn(<TvShow>[]);
-    when(mockTvShowDetailNotifier.isAddedToWatchlist).thenReturn(false);
-    when(mockTvShowDetailNotifier.watchlistMessage).thenReturn('Failed');
+        await tester.pumpWidget(_makeTestableWidget(TopRatedTvShowsPage()));
 
-    final watchlistButton = find.byType(ElevatedButton);
-    // Act create the UI
-    await tester.pumpWidget(_makeTestableWidget(TvShowDetailPage(id: 1416)));
-    // Assert before add to watchlist
-    expect(find.byIcon(Icons.add), findsOneWidget);
-    // Act tap button
-    await tester.tap(watchlistButton);
-    await tester.pump();
-    // Assert AlertDialog and text failed
-    expect(find.byType(AlertDialog), findsOneWidget);
-    expect(find.text('Failed'), findsOneWidget);
-  });
+        expect(listViewFinder, findsOneWidget);
+      });
+
+  testWidgets('Page should display text with message when Error',
+          (WidgetTester tester) async {
+        mck.when(() => mockBloc.state).thenAnswer((_) => TopRatedError('Error message'));
+
+        final textFinder = find.byKey(Key('error_message'));
+
+        await tester.pumpWidget(_makeTestableWidget(TopRatedTvShowsPage()));
+
+        expect(textFinder, findsOneWidget);
+      });
 }

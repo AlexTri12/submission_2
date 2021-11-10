@@ -46,6 +46,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
               );
             } else if (state is PopularError) {
               return Center(
+                key: Key('error_message'),
                 child: Text(state.message),
               );
             } else {
