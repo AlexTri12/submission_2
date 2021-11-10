@@ -1,4 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/presentation/bloc/movie_now_playing_bloc.dart';
+import 'package:movies/presentation/bloc/movie_popular_bloc.dart';
+import 'package:movies/presentation/bloc/movie_top_rated_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:core/core.dart';
 import 'package:movies/domain/entities/movie.dart';
@@ -7,10 +11,10 @@ import 'package:movies/presentation/pages/popular_movies_page.dart';
 import 'package:movies/presentation/pages/search_page.dart';
 import 'package:movies/presentation/pages/top_rated_movies_page.dart';
 import 'package:movies/presentation/pages/watchlist_movies_page.dart';
-import 'package:movies/presentation/provider/movie_list_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:dartz/dartz.dart' as dz;
 
 class HomeMoviePage extends StatefulWidget {
   static const ROUTE_NAME = '/home';
@@ -23,11 +27,9 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+    context.read<MovieTopRatedBloc>().add(FetchTopRated());
+    context.read<MovieNowPlayingBloc>().add(FetchNowPlaying());
+    context.read<MoviePopularBloc>().add(FetchPopular());
   }
 
   @override
@@ -102,52 +104,79 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 'Now Playing',
                 style: kHeading6,
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.nowPlayingMovies);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<MovieNowPlayingBloc, NowPlayingState>(
+                builder: (context, state) {
+                  if (state is NowPlayingLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is NowPlayingHasData) {
+                    final listMovie = state.result;
+                    return MovieList(listMovie
+                        .map((data) => dz.cast<Movie>(data))
+                        .toList()
+                    );
+                  } else if (state is NowPlayingError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return Center();
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
                     Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.popularMovies);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<MoviePopularBloc, PopularState>(
+                builder: (context, state) {
+                  if (state is PopularLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is PopularHasData) {
+                    final listMovie = state.result;
+                    return MovieList(listMovie
+                        .map((data) => dz.cast<Movie>(data))
+                        .toList()
+                    );
+                  } else if (state is PopularError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return Center();
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.topRatedMovies);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<MovieTopRatedBloc, TopRatedState>(
+                builder: (context, state) {
+                  if (state is TopRatedLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is TopRatedHasData) {
+                    final listMovie = state.result;
+                    return MovieList(listMovie
+                        .map((data) => dz.cast<Movie>(data))
+                        .toList()
+                    );
+                  } else if (state is TopRatedError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return Center();
+                  }
+                },
+              ),
             ],
           ),
         ),

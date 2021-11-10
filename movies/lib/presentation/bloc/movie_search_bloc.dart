@@ -26,7 +26,7 @@ class MovieSearchBloc extends Bloc<SearchEvent, SearchState> {
       final query = event.query;
       yield SearchLoading();
 
-      final result= await _searchMovies.execute(query);
+      final result = await _searchMovies.execute(query);
       yield* result.fold(
           (failure) async* {
             yield SearchError(failure.message);

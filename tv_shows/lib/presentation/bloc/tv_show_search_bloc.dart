@@ -26,7 +26,7 @@ class TvShowSearchBloc extends Bloc<SearchEvent, SearchState> {
       final query = event.query;
       yield SearchLoading();
 
-      final result= await _searchTvShows.execute(query);
+      final result = await _searchTvShows.execute(query);
       yield* result.fold(
             (failure) async* {
           yield SearchError(failure.message);

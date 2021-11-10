@@ -18,3 +18,10 @@ export 'package:movies/presentation/provider/watchlist_movie_notifier.dart';
 
 // Bloc
 export 'package:movies/presentation/bloc/movie_search_bloc.dart';
+export 'package:movies/presentation/bloc/movie_detail_bloc.dart';
+export 'package:movies/presentation/bloc/movie_detail_recommendation_bloc.dart';
+export 'package:movies/presentation/bloc/movie_detail_watchlist_bloc.dart';
+export 'package:movies/presentation/bloc/movie_now_playing_bloc.dart';
+export 'package:movies/presentation/bloc/movie_popular_bloc.dart';
+export 'package:movies/presentation/bloc/movie_top_rated_bloc.dart';
+export 'package:movies/presentation/bloc/movie_watchlist_bloc.dart';

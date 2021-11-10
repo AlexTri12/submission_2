@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:movies/domain/entities/movie.dart';
+import 'package:movies/movies.dart';
 import 'package:movies/presentation/pages/popular_movies_page.dart';
 import 'package:movies/presentation/provider/popular_movies_notifier.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'popular_movies_page_test.mocks.dart';
 
-@GenerateMocks([PopularMoviesNotifier])
+@GenerateMocks([MoviePopularBloc])
 void main() {
   late MockPopularMoviesNotifier mockNotifier;
 

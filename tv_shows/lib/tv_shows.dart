@@ -18,3 +18,10 @@ export 'package:tv_shows/presentation/provider/watchlist_tv_show_notifier.dart';
 
 // Bloc
 export 'package:tv_shows/presentation/bloc/tv_show_search_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_detail_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_detail_recommendation_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_detail_watchlist_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_now_playing_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_popular_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_top_rated_bloc.dart';
+export 'package:tv_shows/presentation/bloc/tv_show_watchlist_bloc.dart';

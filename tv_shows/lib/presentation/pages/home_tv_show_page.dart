@@ -1,14 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_shows/domain/entities/tv_show.dart';
+import 'package:tv_shows/presentation/bloc/tv_show_now_playing_bloc.dart';
+import 'package:tv_shows/presentation/bloc/tv_show_popular_bloc.dart';
+import 'package:tv_shows/presentation/bloc/tv_show_top_rated_bloc.dart';
 import 'package:tv_shows/presentation/pages/popular_tv_shows_page.dart';
 import 'package:tv_shows/presentation/pages/search_tv_show_page.dart';
 import 'package:tv_shows/presentation/pages/top_rated_tv_shows_page.dart';
 import 'package:tv_shows/presentation/pages/tv_show_detail_page.dart';
 import 'package:tv_shows/presentation/pages/watchlist_tv_shows_page.dart';
-import 'package:tv_shows/presentation/provider/tv_show_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:dartz/dartz.dart' as dz;
 
 class HomeTvShowPage extends StatefulWidget {
   static const ROUTE_NAME = '/home-tv-show';
@@ -21,11 +25,9 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-            () => Provider.of<TvShowListNotifier>(context, listen: false)
-          ..fetchNowPlayingTvShows()
-          ..fetchPopularTvShows()
-          ..fetchTopRatedTvShows());
+    context.read<TvShowTopRatedBloc>().add(FetchTopRated());
+    context.read<TvShowNowPlayingBloc>().add(FetchNowPlaying());
+    context.read<TvShowPopularBloc>().add(FetchPopular());
   }
 
   @override
@@ -100,52 +102,79 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
                 'Now Playing',
                 style: kHeading6,
               ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvShowList(data.nowPlayingTvShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<TvShowNowPlayingBloc, NowPlayingState>(
+                builder: (context, state) {
+                  if (state is NowPlayingLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is NowPlayingHasData) {
+                    final listTvShow = state.result;
+                    return TvShowList(listTvShow
+                        .map((data) => dz.cast<TvShow>(data))
+                        .toList()
+                    );
+                  } else if (state is NowPlayingError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return Center();
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
                     Navigator.pushNamed(context, PopularTvShowsPage.ROUTE_NAME),
               ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvShowsState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvShowList(data.popularTvShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<TvShowPopularBloc, PopularState>(
+                builder: (context, state) {
+                  if (state is PopularLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is PopularHasData) {
+                    final listTvShow = state.result;
+                    return TvShowList(listTvShow
+                        .map((data) => dz.cast<TvShow>(data))
+                        .toList()
+                    );
+                  } else if (state is PopularError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return Center();
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedTvShowsPage.ROUTE_NAME),
               ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvShowsState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvShowList(data.topRatedTvShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<TvShowTopRatedBloc, TopRatedState>(
+                builder: (context, state) {
+                  if (state is TopRatedLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is TopRatedHasData) {
+                    final listTvShow = state.result;
+                    return TvShowList(listTvShow
+                        .map((data) => dz.cast<TvShow>(data))
+                        .toList()
+                    );
+                  } else if (state is TopRatedError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return Center();
+                  }
+                },
+              ),
             ],
           ),
         ),
