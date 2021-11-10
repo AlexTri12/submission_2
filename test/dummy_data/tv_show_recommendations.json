@@ -1,0 +1,29 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/da8yGNVE5r6jB5SlaY3G52Ecvli.jpg",
+            "genre_ids": [
+                18,
+                10759
+            ],
+            "id": 76773,
+            "media_type": "tv",
+            "name": "Station 19",
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Station 19",
+            "overview": "A group of heroic firefighters at Seattle Fire Station 19—from captain to newest recruit—risk their lives and hearts both in the line of duty and off the clock. These brave men and women are like family, literally and figuratively, and together they put their own lives in jeopardy as first responders to save the lives of others.",
+            "popularity": 221.985,
+            "poster_path": "/lcuCED5Ky2uM5VE6wILOwt5FEb0.jpg",
+            "first_air_date": "2018-03-22",
+            "vote_average": 8.217,
+            "vote_count": 936
+        }
+    ],
+    "total_pages": 2,
+    "total_results": 40
+}

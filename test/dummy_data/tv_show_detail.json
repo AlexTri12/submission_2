@@ -1,0 +1,100 @@
+{
+    "backdrop_path": "/gIApbx2ffXVhJb2D4tiEx2b06nl.jpg",
+    "episode_run_time": [
+        43
+    ],
+    "first_air_date": "2005-03-27",
+    "genres": [
+        {
+            "id": 18,
+            "name": "Drama"
+        }
+    ],
+    "homepage": "http://abc.go.com/shows/greys-anatomy",
+    "id": 1416,
+    "in_production": true,
+    "languages": [
+        "en"
+    ],
+    "last_air_date": "2021-10-14",
+    "last_episode_to_air": {
+        "air_date": "2021-10-14",
+        "episode_number": 3,
+        "id": 3178157,
+        "name": "Hotter Than Hell",
+        "overview": "Seattle’s favorite redhead returns and graces the Grey Sloan halls with her experience and expertise as she attempts to help Richard teach the newest crop of residents. Meanwhile, Meredith has a decision to make, and Link confides in Teddy",
+        "production_code": "",
+        "season_number": 18,
+        "still_path": "/shAWv67Woqmj5WjSsXSATEDL2Lk.jpg",
+        "vote_average": 0.0,
+        "vote_count": 0
+    },
+    "name": "Grey's Anatomy",
+    "next_episode_to_air": {
+        "air_date": "2021-10-21",
+        "episode_number": 4,
+        "id": 3253623,
+        "name": "With a Little Help From My Friends",
+        "overview": "Richard recruits Meredith and Bailey to help him launch a new program. Meanwhile, Addison’s patient has complications from a procedure, and Jo helps a woman who goes into premature labor.",
+        "production_code": "",
+        "season_number": 18,
+        "still_path": null,
+        "vote_average": 0.0,
+        "vote_count": 0
+    },
+    "networks": [
+        {
+            "name": "ABC",
+            "id": 2,
+            "logo_path": "/ndAvF4JLsliGreX87jAc9GdjmJY.png",
+            "origin_country": "US"
+        }
+    ],
+    "number_of_episodes": 383,
+    "number_of_seasons": 18,
+    "origin_country": [
+        "US"
+    ],
+    "original_language": "en",
+    "original_name": "Grey's Anatomy",
+    "overview": "Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital.",
+    "popularity": 762.595,
+    "poster_path": "/zPIug5giU8oug6Xes5K1sTfQJxY.jpg",
+    "production_companies": [
+        {
+            "id": 1557,
+            "logo_path": "/ccz9bqCu3jSFKbPFnfWmjAKZLBL.png",
+            "name": "The Mark Gordon Company",
+            "origin_country": "US"
+        }
+    ],
+    "production_countries": [
+        {
+            "iso_3166_1": "US",
+            "name": "United States of America"
+        }
+    ],
+    "seasons": [
+        {
+            "air_date": null,
+            "episode_count": 11,
+            "id": 3722,
+            "name": "Specials",
+            "overview": "",
+            "poster_path": "/snQYndfsEr3Sto2jOmkmsQuUXAQ.jpg",
+            "season_number": 0
+        }
+    ],
+    "spoken_languages": [
+        {
+            "english_name": "English",
+            "iso_639_1": "en",
+            "name": "English"
+        }
+    ],
+    "status": "Returning Series",
+    "tagline": "The life you save may be your own.",
+    "type": "Scripted",
+    "vote_average": 8.2,
+    "vote_count": 6861
+}
